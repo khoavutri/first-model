@@ -19,6 +19,9 @@ const baseConfig = (isProduction) => {
       clean: true,
       devtoolModuleFilenameTemplate: "[absolute-resource-path]",
     },
+    performance: {
+      hints: false,
+    },
     module: {
       rules: [
         {
@@ -38,6 +41,9 @@ const baseConfig = (isProduction) => {
     },
     resolve: {
       extensions: [".tsx", ".ts", ".js"],
+      fallback: {
+        fs: false,
+      },
     },
     plugins: [
       new CleanWebpackPlugin(),
