@@ -17,6 +17,7 @@
   "description": "",
   "devDependencies": {
     "@types/requirejs": "^2.1.37",
+    "@types/three": "^0.170.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^12.0.2",
     "cross-env": "^7.0.3",

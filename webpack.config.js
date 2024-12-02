@@ -98,6 +98,6 @@ module.exports = (() => {
     case "development":
       return baseConfig(false);
     default:
-      return [baseConfig(false), baseConfig(true)];
+      return baseConfig(false);
   }
 })();
