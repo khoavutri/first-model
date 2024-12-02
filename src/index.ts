@@ -84,3 +84,5 @@ animate();
 (document.getElementById("play-stop") as any).addEventListener("click", () => {
   action.paused = !action.paused;
 });
+
+console.log(THREE);
