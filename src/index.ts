@@ -1,88 +1,37 @@
-import * as THREE from "three";
+import * as THREE from 'three';
 
-const canvas: any = document.getElementById("canvas");
-const width = 512;
-const height = 512;
-
+const container = document.getElementById("container") as HTMLDivElement;
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(0, 0, 100);
+camera.lookAt(0, 0, 0);
+
 const renderer = new THREE.WebGLRenderer();
-renderer.setSize(width, height);
-canvas.appendChild(renderer.domElement);
+renderer.setSize(600, 500);
+renderer.setAnimationLoop(animate);
+container.appendChild(renderer.domElement);
+
 //cube
-const geometry = new THREE.BoxGeometry();
-const materials = [
-  new THREE.MeshBasicMaterial({ color: 0xff0000 }),
-  new THREE.MeshBasicMaterial({ color: 0x00ff00 }),
-  new THREE.MeshBasicMaterial({ color: 0x0000ff }),
-  new THREE.MeshBasicMaterial({ color: 0xffff00 }),
-  new THREE.MeshBasicMaterial({ color: 0xff00ff }),
-  new THREE.MeshBasicMaterial({ color: 0x00ffff }),
-];
-const cube = new THREE.Mesh(geometry, materials);
-cube.castShadow = true;
+const geometry = new THREE.BoxGeometry(20, 20, 20);
+const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+material.side = THREE.DoubleSide;
+const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
-//plane
-const planeGeometry = new THREE.PlaneGeometry(10, 10);
-const planeMaterial = new THREE.MeshBasicMaterial({
-  color: 0x888888,
-  side: THREE.DoubleSide,
-});
-const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-plane.rotation.x = -Math.PI / 2 + 1;
-plane.position.y = -2;
-plane.receiveShadow = true;
-scene.add(plane);
-
-const clock = new THREE.Clock();
-const mixer = new THREE.AnimationMixer(cube);
-
-const rotationXTrack = new THREE.KeyframeTrack(
-  ".rotation[x]",
-  [0, 1, 2],
-  [0, Math.PI, Math.PI * 2]
-);
-
-const rotationYTrack = new THREE.KeyframeTrack(
-  ".rotation[y]",
-  [0, 1, 2],
-  [0, Math.PI, Math.PI * 2]
-);
-
-const rotationZTrack = new THREE.KeyframeTrack(
-  ".rotation[z]",
-  [0, 1, 2],
-  [0, Math.PI, Math.PI * 2]
-);
-
-const clip = new THREE.AnimationClip("rotate", 2, [
-  rotationXTrack,
-  rotationYTrack,
-  rotationZTrack,
-]);
-
-const action = mixer.clipAction(clip);
-action.timeScale = 0.6;
-action.time = 0;
-action.play();
-
-camera.position.z = 5;
+//line
+const points = [];
+points.push(new THREE.Vector3(- 20, 0, 0));
+points.push(new THREE.Vector3(0, 20, 0));
+points.push(new THREE.Vector3(20, 0, 0));
+const linegeometry = new THREE.BufferGeometry().setFromPoints(points);
+const lineLaterial = new THREE.LineBasicMaterial({ color: 0x0000ff });
+lineLaterial.side = THREE.DoubleSide;
+const line = new THREE.Line(linegeometry, lineLaterial);
+scene.add(line);
 
 function animate() {
-  const delta = clock.getDelta();
-  mixer.update(delta);
+  cube.rotation.x += 0.01;
+  cube.rotation.y += 0.01;
+
   renderer.render(scene, camera);
-  requestAnimationFrame(animate);
 }
-
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-animate();
-
-(document.getElementById("play-stop") as any).addEventListener("click", () => {
-  action.paused = !action.paused;
-});
-
-console.log(THREE);
