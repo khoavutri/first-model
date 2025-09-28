@@ -1,4 +1,4 @@
-# webpack-base
+# first-model
 
 ⚡️ Cấu hình cơ bản Webpack cho phát triển ứng dụng JavaScript/TypeScript hiện đại.  
 Mục tiêu: nhanh, dễ mở rộng, có sẵn loader và plugin thường dùng.
