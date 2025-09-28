@@ -54,6 +54,10 @@ const baseConfig = (isProduction) => {
       new webpack.BannerPlugin({
         banner: "The product is owned by Vu Tri Khoa",
       }),
+      // ✅ Copy thư mục public vào dist/public
+      new CopyPlugin({
+        patterns: [{ from: "public", to: "public" }],
+      }),
     ],
     optimization: {
       minimize: isProduction,
@@ -65,9 +69,6 @@ const baseConfig = (isProduction) => {
             },
           },
           extractComments: false,
-        }),
-        new CopyPlugin({
-          patterns: [{ from: "public", to: "public" }],
         }),
       ],
     },
