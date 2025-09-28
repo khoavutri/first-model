@@ -22,7 +22,7 @@ Clone dự án và cài đặt dependencies:
 
 ```bash
 git clone https://github.com/khoavutri/first-model.git
-cd webpack-base
+cd first-model
 npm install
 ```
 
