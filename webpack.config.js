@@ -54,7 +54,6 @@ const baseConfig = (isProduction) => {
       new webpack.BannerPlugin({
         banner: "The product is owned by Vu Tri Khoa",
       }),
-      // ✅ Copy thư mục public vào dist/public
       new CopyPlugin({
         patterns: [{ from: "public", to: "public" }],
       }),
@@ -84,7 +83,7 @@ const baseConfig = (isProduction) => {
       },
       open: true,
       host: "0.0.0.0",
-      port: 8080,
+      port: 9000,
     };
   }
 
